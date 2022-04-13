@@ -1,0 +1,79 @@
+private boolean isValid(int x, int y, ChessPiece[][] board) {
+        int oldX = this.fieldX;
+        int oldY = this.fieldY;
+
+        if(isAllyPiece(x, y, board)) {
+            return false;
+        }
+
+        boolean isAhead = x == oldX + 1;
+        boolean isAheadBlack = x == oldX - 1;
+        boolean isRight = y == oldY + 1;
+        boolean isLeft = y == oldY - 1;
+
+        if(this.isWhite) {
+            // Два шага с нуля
+            if(oldX == 1 && x == 3 && isField(x, y, board) && isField(x - 1, y, board)) {
+                System.out.print("Зашел 1");
+
+                return true;
+            }
+            // Шаг вперед на пустую клетку
+            else if (isAhead && isField(x, y, board) == true) {
+                System.out.print("Зашел 2");
+
+                return true;
+            }
+            // Забирает фигуру справа или слева
+            else if(oldY == 0) {
+                if ((isAhead) && (isRight) && !(isField(x, y, board))) {
+                    System.out.print("Зашел 3");
+
+                    return true;
+                }
+                return false;
+            }
+            else if (oldY == 7) {
+                if ((isAhead) && (isLeft) && !(isField(x, y, board))) {
+                    System.out.print("Зашел 4");
+
+                    return true;
+                }
+                return false;
+            }
+            else if ( (isAhead) && (isLeft || isRight) && !(isField(x, y, board))) {
+                System.out.print("Зашел 5");
+
+                return true;
+            }
+            System.out.print("Зашел 6");
+        }
+        // Для черных
+        else {
+            // Два шага с нуля
+            if(oldX == 6 && x == 4 && isField(x, y, board) && isField(x + 1, y, board)) {
+                return true;
+            }
+            // Шаг вперед на пустую клетку
+            else if (isAheadBlack && isField(x, y, board)) {
+                return true;
+            }
+            // Забирает фигуру справа или слева
+            else if(oldY == 0) {
+                if ( (isAheadBlack) && (isRight) && !(isField(x, y, board)) ) {
+                    return true;
+                }
+                return false;
+            }
+            else if (oldY == 7) {
+                if ( (isAheadBlack) && (isLeft) && !(isField(x, y, board)) ) {
+                    return true;
+                }
+                return false;
+            }
+            else if ( (isAheadBlack) && (isLeft || isRight) && !(isField(x, y, board))) {
+                return true;
+            }
+        }
+        return false;
+    }
